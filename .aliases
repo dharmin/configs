@@ -1,0 +1,201 @@
+#######################################################################
+#
+#  __  __            _    _ _
+# |  \/  |_   _     / \  | (_) __ _ ___  ___  ___
+# | |\/| | | | |   / _ \ | | |/ _` / __|/ _ \/ __|
+# | |  | | |_| |  / ___ \| | | (_| \__ \  __/\__ \
+# |_|  |_|\__, | /_/   \_\_|_|\__,_|___/\___||___/
+#         |___/
+#
+#######################################################################
+
+############################################################
+#
+# Dharmin Shah
+# License: GPLv3
+# See https://github.com/dharmin/configs
+# for more information
+#
+############################################################
+
+############################################################
+# Sections:
+#
+#	-> General
+#	-> Music and audio
+#	-> Network
+#	-> Searching stuff
+#	-> Shell, Bash and Zsh
+#	-> File manipulation
+#	-> Disk management
+#	-> Shortcuts and Quick commands
+#	-> Pass alias
+#	-> Misc
+#
+############################################################
+
+###-- General --###
+#
+# Enable aliases to be sudo’ed
+alias sudo='sudo '
+#
+# Common vi alias
+alias vi="vim"
+#
+# Neovim
+alias vim="vim"
+#
+# Clear the screen of the terminal, but faster.
+alias c="clear"
+#
+# Be more verbose and interactive with cp, mv and rm.
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -i"
+#
+# Grep always searching in case insensitive mode
+alias grep="grep -i"
+#
+# Colored diff
+alias diff="colordiff"
+
+###-- Music and audio --###
+#
+# Quick command to open pulsemixer
+alias audio="pulsemixer"
+#
+# Generate a playlist in .m3u for mpd
+alias genplaylist="cd ~/Music;find . -name '*.mp3' -o -name '*.flac' -o -name '*.m4a' -o -name '*.mp4'|sed -e 's%^./%%g' > ~/.mpd/playlists/all.m3u"
+#
+#█▓▒░ update mpd database
+function genplaylist() {
+  cd ~/music
+  find . -name '*.mp3' -o -name '*.flac'|sed -e 's%^./%%g' > ~/.config/mpd/playlists/all.m3u
+  mpc clear
+  mpc load all.m3u
+  mpc update
+}
+#
+
+
+###-- Network --###
+#
+# Quick command to know if the internet works properly
+alias p="ping -c 3 google.com"
+#
+# wget, but faster. 'dl' stands for download.
+alias dl="wget"
+#
+# Command to quickly download and convert to mp3 a song from youtube
+alias mp3-dl="youtube-dl --audio-quality 1 --extract-audio --audio-format mp3"
+#
+
+
+###-- Searching stuff --###
+#
+# Quickly search for something with find. 'fihe' stands for 'find here'
+alias fihe="find . -iname"
+#
+# Find directories by their name
+alias fd='find . -type d -name'
+# Find files by their name
+alias ff='find . -type f -name'
+# History
+alias hig="history | grep"
+#
+
+
+###-- Shell, Bash and Zsh --###
+#
+# Start vi-mode of zsh
+alias bv="bindkey -v"
+
+
+###-- File manipulation --###
+#
+# Just an ls more colorful
+alias ls="ls --color=yes --group-directories-first"
+#
+# To avoid typos
+alias sl="ls --color=yes --group-directories-first"
+alias LS="ls --color=yes --group-directories-first"
+#
+# Quick command to rm -r
+alias rr="rm -r"
+#
+# Find the 10 most heavy files in a folder
+alias hefi="du -hsx * | sort -rh | head -10"
+#
+# See the most heavy files in a folder
+alias duf='du -sh *'
+#
+alias lsg="ls | grep -i"
+alias lsag="ls -a | grep -i"
+
+
+###-- Disk management --###
+#
+#Quick command to mount a USB, flash drive, hard drive etc. I like how udisksctl mounts.
+alias m="udisksctl mount -b"
+#
+# Same, but unmount
+alias um="udisksctl unmount -b"
+#
+
+
+###-- Shortcuts and Quick commands --###
+#
+# Open my own vim documentation quickly
+alias tv="less $HOME/Documents/tipsVim"
+#
+# See the documentation for fugitive.vim quickly
+alias dfu="less $HOME/.vim/bundle/vim-fugitive/doc/fugitive.txt"
+#
+# Quick command to open ranger
+alias r="ranger"
+#
+# Quick command to modify .zshrc
+alias zshconfig="vim ~/.zshrc"
+#
+# Quick command to modify .vimrc
+# "cv" stands for Customize Vim
+# In addition, the letters "c" and "v" are quite close to each other on the QWERTY keyboard.
+alias cv="vim ~/.config/vim/init.vim"
+#
+# Edit i3 conf with vim and much faster
+alias vi3="vim ~/.config/i3/config"
+#
+# Quick command to modify .aliases. "csa" stands for "Configure shell aliases".
+alias csa="vim ~/.aliases"
+#
+alias todo="vim ~/.todo"
+#
+# sudo make me a sandwich.
+alias plz='sudo $(fc -ln -1)'
+
+##-- Pass alias --##
+#
+# "gghp" stands for Get GitHub Password
+
+
+
+###-- Misc --###
+#
+# Create a directory and inmediately "cd" to that directory
+mcd () {
+  mkdir -p $1
+  cd $1
+}
+#
+# When i forgot to use sudo vim:
+alias sv="sudo -e vim"
+#
+# To avoid typos pasting from webs
+alias nano="vim"
+# lulz
+alias emacs="vim"
+alias iv="vim"
+#
+# Get current weather. Replace "Bhuj" with your current city.
+alias weather="curl http://wttr.in/Bhuj"
+#

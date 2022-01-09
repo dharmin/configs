@@ -48,11 +48,13 @@ alias vim="vim"
 # Clear the screen of the terminal, but faster.
 alias c="clear"
 #
-# Be more verbose and interactive with cp, mv and rm.
+# Be more verbose and interactive with rsync, cp, mv and rm.
+alias rsync="rsync -vP"
 alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -i"
 #
+
 # Grep always searching in case insensitive mode
 alias grep="grep -i"
 #
@@ -64,13 +66,11 @@ alias diff="colordiff"
 # Quick command to open pulsemixer
 alias audio="pulsemixer"
 #
-# Generate a playlist in .m3u for mpd
-alias genplaylist="cd ~/Music;find . -name '*.mp3' -o -name '*.flac' -o -name '*.m4a' -o -name '*.mp4'|sed -e 's%^./%%g' > ~/.mpd/playlists/all.m3u"
 #
 #█▓▒░ update mpd database
 function genplaylist() {
-  cd ~/music
-  find . -name '*.mp3' -o -name '*.flac'|sed -e 's%^./%%g' > ~/.config/mpd/playlists/all.m3u
+  cd ~/Music
+  find . -name '*.mp3' -o -name '*.flac'|sed -e 's%^./%%g' > ~/.local/share/mpd/playlists/all.m3u
   mpc clear
   mpc load all.m3u
   mpc update
@@ -89,7 +89,8 @@ alias dl="wget"
 # Command to quickly download and convert to mp3 a song from youtube
 alias mp3-dl="youtube-dl --audio-quality 1 --extract-audio --audio-format mp3"
 #
-
+# SSH color
+alias ssh='TERM=xterm-256color ssh'
 
 ###-- Searching stuff --###
 #
@@ -97,7 +98,7 @@ alias mp3-dl="youtube-dl --audio-quality 1 --extract-audio --audio-format mp3"
 alias fihe="find . -iname"
 #
 # Find directories by their name
-alias fd='find . -type d -name'
+alias fdir='find . -type d -name'
 # Find files by their name
 alias ff='find . -type f -name'
 # History
@@ -187,6 +188,7 @@ mcd () {
   cd $1
 }
 #
+alias vim="nvim"
 # When i forgot to use sudo vim:
 alias sv="sudo -e vim"
 #
@@ -199,3 +201,24 @@ alias iv="vim"
 # Get current weather. Replace "Bhuj" with your current city.
 alias weather="curl http://wttr.in/Bhuj"
 #
+# Run tmux always with unicode
+alias tmux="tmux -u"
+
+# move movies from google drive to current directory
+rclone-movie() {
+if [ -z "$1" ]; then
+  SELECTED=`rclone lsf saiko:/Movies | fzf`
+else
+  SELECTED=`echo $1`
+fi
+rclone move -P "saiko:/Movies/$SELECTED" "./$SELECTED"
+}
+# move television from google drive to current directory
+rclone-tv() {
+if [ -z "$1" ]; then
+  SELECTED=`rclone lsf saiko:/Television | fzf`
+else
+  SELECTED=`echo $1`
+fi
+rclone move -P "saiko:/Television/$SELECTED" "./$SELECTED"
+}
